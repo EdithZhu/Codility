@@ -1,0 +1,15 @@
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        int len = A.length;
+        if (len == 3) return A[0]*A[1]*A[2];
+        Arrays.sort(A);
+        return Math.max(A[0]*A[1]*A[2],Math.max(A[0]*A[1]*A[len-1],Math.max(A[len-3]*A[len-2]*A[len-1], A[0]*A[len-2]*A[len-1]))); 
+    }
+}
