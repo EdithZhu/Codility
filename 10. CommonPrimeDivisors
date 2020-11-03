@@ -1,0 +1,41 @@
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int[] A, int[] B) {
+        // write your code in Java SE 8
+        int res = 0;
+        for (int i=0;i<A.length;i++) {
+            if (helper(A[i],B[i]) == true)
+            res++;
+        }
+        return res;
+    }
+    //check if number1 has the same divisors as number2
+    private boolean helper(int num1, int num2){
+        int divisor = maxDivisor(num1,num2);
+        int div1 = 0, div2 = 0;
+        while (num1 != 1) {
+            div1 = maxDivisor(num1,divisor);
+            if (div1 == 1) break;
+            num1 = num1 / div1;
+        }
+        while (num2 != 1) {
+            div2 = maxDivisor(num2,divisor);
+            if (div2 == 1) break;
+            num2 = num2 / div2;
+        }
+        return num1 == 1 && num2 == 1;
+    }
+    //find the greatest common divisior
+    private int maxDivisor(int num1, int num2){
+        if (num1 < num2){//make sure 1st element is greater
+            return maxDivisor(num2,num1);
+        }
+        else 
+        return num1%num2==0 ? num2 : maxDivisor(num2,num1%num2);
+    }
+}
