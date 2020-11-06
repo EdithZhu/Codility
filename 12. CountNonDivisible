@@ -1,0 +1,40 @@
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int[] solution(int[] A) {
+        // write your code in Java SE 8
+        int len = A.length;
+        HashMap<Integer, Integer> map = new HashMap<>();//save result set
+        HashMap<Integer, Integer> numDup = new HashMap<>();//count duplicates
+        for (int num : A) {//count duplicates
+            numDup.put(num, numDup.getOrDefault(num,0) + 1);
+        }
+        int[] res = new int[len];//store result
+        for (int i=0;i<len;i++) {//traverse array A
+            if (map.containsKey(A[i]) == true) {//if visited
+                res[i] = map.get(A[i]);
+            }
+            else {//if have not stored in the result array
+                int maxDiv = (int) Math.sqrt(A[i]);
+                int count =0;//count divisors
+                for (int j=1;j<=maxDiv;j++) {
+                    if (A[i] % j == 0) {
+                        if (numDup.containsKey(j) == true) {
+                            count += numDup.get(j);
+                        }
+                        if ((A[i]/j != j) && numDup.containsKey(A[i]/j) == true) {//A[i]/j != j!!!!
+                            count += numDup.get(A[i]/j);
+                        }
+                    }
+                }
+                res[i] = len - count;
+                map.put(A[i],res[i]);
+            }
+        }
+        return res;
+    }
+}
