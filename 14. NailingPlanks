@@ -1,0 +1,51 @@
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+class Solution {
+    public int solution(int[] A, int[] B, int[] C) {
+        int lenA = A.length;
+        int lenC = C.length; 
+        int[][] arrayC = new int[lenC][2];
+        for (int i = 0; i < lenC; i++) {
+            arrayC[i][0] = C[i];//store the value of C
+            arrayC[i][1] = i;//store the index of C
+        }
+        Arrays.sort(arrayC, Comparator.comparingInt(a -> a[0]));
+        int res = 0;
+        for (int i=0; i<lenA; i++) {
+            int count = nailNum(arrayC, A[i], B[i], res);
+            if (count == -1 || count == lenA - 1) {
+                if (count == -1) return count;
+                else return count + 1;
+            }
+            res = Math.max(res, count);
+        }
+        return res + 1;
+    }
+        
+    private int nailNum(int[][] arrayC, int Ai, int Bi, int preRes) {
+        int len = arrayC.length;
+        int start = 0, end = len - 1;//index range of arrayC
+        int index = -1;
+        while (start <= end) {
+            int mid = (start + end) / 2;//binary search
+            if (arrayC[mid][0] < Ai) start = mid + 1;//out of bound
+            else if (arrayC[mid][0] > Bi) end = mid - 1;
+            else {
+                index = mid;
+                end = mid - 1;
+            }
+        }
+        if (index == -1) return index;//no value available
+        int res = arrayC[index][1];
+        
+        for (int i = index + 1; i < len; i++) {
+            if (arrayC[i][0] > Bi) break;
+            res = Math.min(res, arrayC[i][1]);//find min index
+            if (res <= preRes) return preRes;
+        }
+        return res;
+    }
+}
