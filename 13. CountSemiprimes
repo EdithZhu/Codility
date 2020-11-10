@@ -1,0 +1,55 @@
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int[] solution(int N, int[] P, int[] Q) {
+        int len = P.length;
+        int[] res = new int[len];
+        int[] prime = isPrime(N);
+        boolean[] semiprime = isSemiPrime(prime);
+        int[] count = new int[semiprime.length];
+        //count semiprimes for [1,N]
+        for (int i=1;i<semiprime.length;i++) {
+            int curr = semiprime[i] == true ? 1 : 0;
+            count[i] = curr + count[i-1];
+        }
+        //calculate semiprimes for [P[i],Q[i]]
+        for (int i=0;i<len;i++) {
+            res[i] = count[Q[i]] - count[P[i]-1];
+        }
+        return res;
+    }
+    //save first factor
+    private int[] isPrime(int num) {
+        int[] prime = new int[num+1];
+        int end = (int) Math.sqrt(num);
+        for(int i=2; i<=end; i++) {
+            if(prime[i] == 0) {
+                int index = i*i;
+                while(index <= num) {
+                    if(prime[index] == 0){
+                        prime[index] = i;    
+                    }                    
+                    index = index + i;
+                }               
+            }
+        }
+        return prime;
+    }
+    //check if semiprime
+    private boolean[] isSemiPrime(int[] prime) {
+        int len = prime.length;
+        boolean semiprime[] = new boolean[len];
+        for(int i=0;i<len;i++) {
+            if(prime[i] == 0) continue;
+            int factor = prime[i];
+            if(prime[i/factor] == 0) {
+                semiprime[i] = true;  
+            }
+        }  
+        return semiprime;
+    }
+}
