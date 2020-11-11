@@ -1,0 +1,22 @@
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int[] A, int[] B) {
+        // write your code in Java SE 8
+        int len = A.length;
+        if (len == 0 || len == 1) return len;
+        int res = 1;
+        int index = 0;
+        for (int i=1;i<len;i++) {
+            if (B[index] < A[i]) {
+                index = i;
+                res++;
+            }
+        }
+        return res;
+    }
+}
