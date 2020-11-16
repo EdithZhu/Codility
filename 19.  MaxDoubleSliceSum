@@ -1,0 +1,29 @@
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        int len = A.length;
+        int[] startArr = new int[len];
+        int[] endArr = new int[len];
+        int sum = 0;
+        for (int i=len-2;i>=1;i--){//A[0] not included
+            sum = Math.max(sum + A[i],0);//comparing with 0!!!
+            startArr[i] = sum;
+        }
+        sum = 0;//reset
+        for (int j=1;j<=len-2;j++) {
+            sum = Math.max(sum + A[j],0);
+            endArr[j] = sum;
+        }
+        int res = 0;
+        for (int k=0;k<=len-3;k++) {
+            res = Math.max(res, endArr[k] + startArr[k+2]);
+        }
+        return res;
+    }
+}
