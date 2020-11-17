@@ -1,0 +1,25 @@
+https://app.codility.com/demo/results/trainingV6H7VT-Y89/
+
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        if (A == null || A.length <= 1) return 0;
+        int len = A.length;
+        int min = A[0];//store the min value
+        int res = 0;//store the max profit
+        for (int i=1;i<len;i++) {
+            if (A[i] < min){
+                min = A[i];
+            } else {
+                res = Math.max(res, A[i] - min);
+            }
+        }
+        return res;
+    }
+}
