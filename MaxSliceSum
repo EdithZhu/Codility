@@ -1,0 +1,24 @@
+https://app.codility.com/demo/results/training632MPA-42G/
+
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        if (A.length == 1) return A[0];
+        int len = A.length;
+        int[] dp = new int[len];
+        dp[0] = A[0];
+        int max = A[0];
+        for (int i=1;i<len;i++) {
+            int tmp = dp[i-1] + A[i];
+            dp[i] = Math.max(tmp,A[i]);
+            max = Math.max(max,dp[i]);
+        }
+        return max;
+    }
+}
