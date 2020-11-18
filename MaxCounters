@@ -1,0 +1,58 @@
+https://app.codility.com/demo/results/training7ZBS2K-UAA/
+method1 - time out - Arrays.fill() is time consuming
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int[] solution(int N, int[] A) {
+        // write your code in Java SE 8
+        int max = 0;
+        int len = A.length;
+        int[] res = new int[N];
+        for (int i=0;i<len;i++) {
+            int value = A[i];
+            if (value == N+1) {
+                Arrays.fill(res,max);
+            } else if (value >= 1 || value <= N) {
+                res[value-1] = res[value-1] + 1;
+                max = Math.max(max, res[value-1]);
+            }
+        }
+        return res;
+    }
+}
+
+method2
+https://app.codility.com/demo/results/trainingTDUDMN-CNR/
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int[] solution(int N, int[] A) {
+        // write your code in Java SE 8
+        int len = A.length;
+        int[] res = new int[N];
+        int max = 0;
+        int min = 0;
+        for (int i=0;i<len;i++) {
+            int val = A[i];
+            if (val >= 1 && val <= N){
+                res[val-1] = Math.max(min, res[val-1]);
+                res[val-1] = res[val-1] + 1;
+                max = Math.max(max, res[val-1]);
+            } else if (val == N + 1) {
+                min = max;
+            }
+        }
+        for (int i=0;i<N;i++) {
+            res[i] = Math.max(res[i], min);
+        }
+        return res;
+    }
+}
