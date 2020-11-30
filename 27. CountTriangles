@@ -1,0 +1,27 @@
+https://app.codility.com/demo/results/training725JT6-9SK/
+
+import java.util.*;
+class Solution {
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        if (A == null || A.length <= 2) return 0;
+        int len = A.length;
+        Arrays.sort(A);
+        int index1 = 0;//anchor - first element
+        int res = 0;//count the triangles
+        while (index1 <= len-1) {
+            int index2 = index1 + 1;
+            int index3 = index1 + 2;
+            while (index2 <= len - 2) {
+                if (index3 <= len-1 && A[index1] + A[index2] > A[index3]){
+                    index3++;
+                } else {
+                    res += index3 - index2 - 1;
+                    index2++;
+                }
+            }
+            index1++;
+        }
+        return res;
+    }
+}
