@@ -1,0 +1,31 @@
+https://app.codility.com/demo/results/trainingBVKXPE-TMB/
+
+// you can also use imports, for example:
+import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(int[] A) {
+        // the slice contains at least two elements!!!
+        int p1 = 0; //pointer 1
+        double avg = (double) Integer.MAX_VALUE;
+        int len = A.length;
+        for (int i=0;i<len-1;i++) {
+            double avg2 = (A[i] + A[i+1])/2.0;
+            if (avg2 < avg) {
+                p1 = i;
+                avg = avg2;
+            }
+            if (i<len-2) {
+                double avg3 = (A[i] + A[i+1] + A[i+2])/3.0;
+                if (avg3 < avg) {
+                p1 = i;
+                avg = avg3;
+                }
+            }
+        }
+        return p1;
+    }
+}
