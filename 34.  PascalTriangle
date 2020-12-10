@@ -1,0 +1,72 @@
+//method 1 - count # of 'false'
+https://app.codility.com/demo/results/trainingMQ7E2Z-G8Q/
+
+import java.util.*;
+
+class Solution {
+    public int solution(boolean[] P) {
+        long pLen = P.length;
+        int index = -1;//index of 'false'
+        long count = 0; //count the num of 'false'
+        boolean prevFalse = false;//if false in front - true
+        for (int i=0;i<pLen;i++) {
+            boolean bool = P[i];
+            if (bool == true && prevFalse == true) {
+                long num = i - index;
+                count += (1 + num) * num / 2;
+                prevFalse = false;
+            }
+            else if (bool == true) {
+                prevFalse = false;
+            }
+            else if (bool == false && prevFalse == false){
+                if (i == pLen-1) {
+                    count++;
+                }
+                index = i;
+                prevFalse = true;
+            } 
+            else if (bool == false && prevFalse == true) {
+                if (i == pLen-1) {
+                    long num = i - index + 1;
+                    count += (1 + num) * num / 2;
+                    prevFalse = false; 
+                    index = -1; 
+                } 
+            }
+        }
+        long res = (1+pLen)*pLen/2 - count;
+        return res > 1000000000 ? 1000000000 : (int) res;
+    }
+}
+
+
+
+
+//method 2 - count # of 'true'
+https://app.codility.com/demo/results/trainingWCX8RS-5QU/
+
+// you can also use imports, for example:
+// import java.util.*;
+
+// you can write to stdout for debugging purposes, e.g.
+// System.out.println("this is a debug message");
+
+class Solution {
+    public int solution(boolean[] P) {
+        // write your code in Java SE 8
+        int res = 0;
+        int limiter = 0;
+        int len = P.length;
+        for(int i = 0; i < P.length; i++) {
+            if(P[i]) {
+                res += (len - i) * (i + 1 - limiter);
+                if(res > 1000000000) {
+                    return 1000000000;
+                }
+                limiter = i + 1;
+            }
+        }
+        return res;
+    }
+}
